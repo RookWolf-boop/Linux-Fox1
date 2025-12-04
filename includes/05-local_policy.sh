@@ -3,8 +3,9 @@ set -euo pipefail
 
 # 05-local_policy.sh
 # Writes a secure set of sysctls to /etc/sysctl.d/99-secure.conf and applies
-# them when invoked via invoke_local_policy(). This will only run on Linux Mint
-# by default and will not execute when sourced by the top-level orchestrator.
+# them when invoked via invoke_local_policy(). This will run on Linux Mint and
+# Ubuntu (and Debian) by default and will not execute when sourced by the
+# top-level orchestrator.
 
 apply_sysctl() {
 	local sudo_cmd=""
@@ -80,14 +81,15 @@ invoke_local_policy() {
 	fi
 
 	case "${this_id}" in
-		linuxmint|mint|*mint*) : ;;
+		linuxmint|mint|*mint*|ubuntu|debian)
+			: ;;
 		*)
-			echo "[i] Skipping local policy: not running on Linux Mint (detected: ${this_id:-unknown})."
+			echo "[i] Skipping local policy: not running on supported distro (detected: ${this_id:-unknown})."
 			return 0
 			;;
 	esac
 
-	echo "[+] Applying local security policy (Mint-only)..."
+	echo "[+] Applying local security policy (Mint/Ubuntu/Debian)..."
 	apply_sysctl
 	echo "[+] Done."
 }
