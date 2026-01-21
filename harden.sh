@@ -56,7 +56,8 @@ while true; do
   write_menu_item 11 "Unwanted Software"                 "${COMPLETED[11]:-0}"
   write_menu_item 12 "Malware"                           "${COMPLETED[12]:-0}"
   write_menu_item 13 "Application Security (submenu)"    "${COMPLETED[13]:-0}"
-  write_menu_item 14 "Exit"                              "0"
+  write_menu_item 14 "Finding Backdoors"                 "${COMPLETED[14]:-0}"
+  write_menu_item 15 "Exit"                              "0"
 
   read -rp $'\nEnter choice: ' choice
   case "$choice" in
@@ -73,7 +74,8 @@ while true; do
     11) invoke_unwanted_software;               COMPLETED[11]=1 ;;
     12) invoke_malware;                         COMPLETED[12]=1 ;;
     13) invoke_application_security_menu;       COMPLETED[13]=1 ;;
-    14) printf "%bBye%b\n" "$C_CYAN" "$C_RESET"; exit 0 ;;
+    14) invoke_finding_backdoor;                COMPLETED[14]=1 ;;
+    15) printf "%bBye%b\n" "$C_CYAN" "$C_RESET"; exit 0 ;;
     *)  printf "%bInvalid option%b\n" "$C_RED" "$C_RESET" ;;
   esac
 done
