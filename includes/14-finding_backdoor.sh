@@ -77,14 +77,14 @@ check_suid_sgid_binaries() {
 	echo "[+] Checking for suspicious SUID/SGID binaries..."
 	echo "[i] SUID/SGID files modified in last 30 days:"
 	
-	find / -type f \( -perm -4000 -o -perm -2000 \) -mtime -30 2>/dev/null | while read -r file; do
+	find / -type f -perm -4000 -o -perm -2000 -mtime -30 2>/dev/null | while read -r file; do
 		echo "    $file"
 		ls -lh "$file" 2>/dev/null
 	done
 	
 	echo ""
 	echo "[i] Non-standard SUID binaries (not in /usr/bin, /bin, /usr/sbin, /sbin):"
-	find / -type f \( -perm -4000 -o -perm -2000 \) ! -path "/usr/bin/*" ! -path "/bin/*" ! -path "/usr/sbin/*" ! -path "/sbin/*" 2>/dev/null || echo "    None found"
+	find / -type f -perm -4000 -o -perm -2000 ! -path "/usr/bin/*" ! -path "/bin/*" ! -path "/usr/sbin/*" ! -path "/sbin/*" 2>/dev/null || echo "    None found"
 	echo ""
 }
 
